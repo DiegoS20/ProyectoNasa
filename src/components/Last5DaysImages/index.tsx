@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Button, ScrollView, Text, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {APODResponse} from '../../utils/getAPOD';
 import getPast5APOD from '../../utils/getPast5APOD';
+import {RootStackParams} from '../../routes';
 
 import styles from './styles';
 
@@ -29,12 +32,26 @@ export default function Last5DaysImages() {
   );
 }
 
-const PostImage = ({title, date}: APODResponse) => (
-  <View style={styles.PIContainer}>
-    <Text style={styles.PITitle}>{title}</Text>
-    <Text style={styles.PIDate}>{date}</Text>
-    <View style={styles.PIBtnContainer}>
-      <Button title="View" />
+type NavigationProps = NativeStackNavigationProp<RootStackParams>;
+const PostImage = ({title, date, url, explanation}: APODResponse) => {
+  const {navigate} = useNavigation<NavigationProps>();
+
+  const handleViewBtnPress = () => {
+    navigate('Detail', {
+      title,
+      date,
+      url,
+      explanation,
+    });
+  };
+
+  return (
+    <View style={styles.PIContainer}>
+      <Text style={styles.PITitle}>{title}</Text>
+      <Text style={styles.PIDate}>{date}</Text>
+      <View style={styles.PIBtnContainer}>
+        <Button title="View" onPress={handleViewBtnPress} />
+      </View>
     </View>
-  </View>
-);
+  );
+};

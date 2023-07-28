@@ -6,6 +6,7 @@ import {
 } from '@react-navigation/native-stack';
 import Home from './views/Home';
 import Detail from './views/Detail';
+import {APODResponse} from './utils/getAPOD';
 
 const Stack = createNativeStackNavigator<RootStackParams>();
 const routeScreenDefaultOptions: NativeStackNavigationOptions = {
@@ -38,5 +39,5 @@ export default function Routes() {
 
 export type RootStackParams = {
   Home: undefined;
-  Detail: undefined;
+  Detail: Partial<APODResponse>;
 };
